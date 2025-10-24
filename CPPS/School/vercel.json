@@ -1,9 +1,7 @@
 {
-  "buildCommand": "cd frontend && npm run build",
-  "outputDirectory": "frontend/build",
+  "buildCommand": "cd CPPS/School/frontend && npm run build",
+  "outputDirectory": "CPPS/School/frontend/build",
   "framework": "react",
-  "env": {
-    "REACT_APP_API_URL": "@react_app_api_url"
-  }
+  "installCommand": "cd CPPS/School/frontend && npm install"
 }
 

@@ -3,79 +3,122 @@ import { motion } from 'framer-motion';
 
 const Faculty = () => {
   const facultyMembers = [
+    // Leadership Team (Same as Home Page)
     {
       id: 1,
       name: 'Manish Kumar',
       position: 'Managing Director',
-      qualification: 'B.A.',
-      experience: '20+ Years',
       image: '/image/FAC1.png'
     },
     {
       id: 2,
       name: 'Anjani Kumari',
       position: 'Principal',
-      qualification: 'M.A.',
-      experience: '18+ Years',
       image: '/image/principle.png'
     },
     {
       id: 3,
+      name: 'Rashmi Kumari',
+      position: 'Manager',
+      image: '/image/FAC13.png'
+    },
+    // Faculty Members from Images
+    {
+      id: 4,
       name: 'Raj Kumar Singh',
       position: 'Teacher',
-      qualification: 'M.A.',
-      experience: '18+ Years',
       image: '/image/FAC2.jpeg'
     },
     {
-      id: 4,
+      id: 5,
       name: 'Krishna Kumar',
       position: 'Science Teacher',
-      qualification: 'M.Sc. Physics',
-      experience: '15+ Years',
       image: '/image/FAC3.png'
     },
     {
-      id: 5,
+      id: 6,
       name: 'M.N Singh',
       position: 'English Teacher',
-      qualification: 'M.A. English',
-      experience: '15+ Years',
       image: '/image/FAC4.png'
     },
     {
-      id: 6,
-      name: 'Priya Sharma',
-      position: 'Mathematics Teacher',
-      qualification: 'M.Sc. Mathematics',
-      experience: '12+ Years',
+      id: 7,
+      name: 'Richa Pushpraj',
+      position: 'General Knowledge Teacher',
       image: '/image/FAC5.png'
     },
     {
-      id: 7,
-      name: 'Ram Naresh Singh',
-      position: 'Hindi Teacher',
-      qualification: 'M.A. Hindi',
-      experience: '12+ Years',
-      image: '/image/FAC18.png'
+      id: 8,
+      name: 'Shivam Kumar',
+      position: 'Sports Teacher',
+      image: '/image/FAC22.png'
     },
     {
-      id: 8,
-      name: 'Anjali Verma',
-      position: 'Social Studies Teacher',
-      qualification: 'M.A. History',
-      experience: '10+ Years',
+      id: 9,
+      name: 'Vinita Pandey',
+      position: 'Snaskrit Teacher',
       image: '/image/FAC7.png'
     },
     {
-      // --- THIS WAS THE FIX ---
-      id: 9, 
-      name: 'Vikram Singh',
-      position: 'Computer Science Teacher',
-      qualification: 'B.Tech. IT',
-      experience: '8+ Years',
+      id: 10,
+      name: 'Prerna Kumari',
+      position: 'S.S.T Teacher',
       image: '/image/FAC8.png'
     },
+    {
+      id: 11,
+      name: 'Kaushal Kishore',
+      position: 'English Teacher',
+      image: '/image/FAC9.png'
+    },
+    {
+      id: 12,
+      name: 'Sanjay Suman',
+      position: 'Science Teacher',
+      image: '/image/FAC10.png'
+    },
+    {
+      id: 13,
+      name: 'Anand Kumar Singh',
+      position: 'Science Teacher',
+      image: '/image/FAC11.png'
+    },
+    {
+      id: 14,
+      name: 'Sanjiv Singh',
+      position: 'Hindi Teacher',
+      image: '/image/FAC12.png'
+    },
+    {
+      id: 15,
+      name: 'Nivritti Singh',
+      position: 'General Knowledge Teacher',
+      image: '/image/FAC14.png'
+    },
+    {
+      id: 16,
+      name: 'Dilip Singh',
+      position: 'Maths Teacher',
+      image: '/image/FAC16.png'
+    },
+    {
+      id: 17,
+      name: 'Ram Naresh Singh',
+      position: 'Hindi Teacher',
+      image: '/image/FAC18.png'
+    },
+    {
+      id: 18,
+      name: 'Sandhya Kumari',
+      position: 'Snaskrit Teacher',
+      image: '/image/FAC19.png'
+    },
+    {
+      id: 19,
+      name: 'Vicky Kumar',
+      position: 'Computer Teacher',
+      image: '/image/FAC21.jpeg'
+    }
   ];
 
   return (
@@ -108,7 +151,7 @@ const Faculty = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="faculty-card text-center p-4 shadow rounded">
+                <div className="faculty-card uniform-card text-center p-4 shadow rounded">
                   <div className="faculty-image-wrapper">
                     <img
                       src={member.image}
@@ -124,12 +167,6 @@ const Faculty = () => {
                   </div>
                   <h5 className="mb-2">{member.name}</h5>
                   <h6 className="text-primary mb-2">{member.position}</h6>
-                  <p className="text-muted mb-1">
-                    <strong>Qualification:</strong> {member.qualification}
-                  </p>
-                  <p className="text-muted mb-0">
-                    <strong>Experience:</strong> {member.experience}
-                  </p>
                   <div className="faculty-social mt-3">
                     <a href="#" className="btn btn-outline-primary btn-sm me-2">
                       <i className="fab fa-twitter"></i>

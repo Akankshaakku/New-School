@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,7 +12,7 @@ const Footer = () => {
             <div className="footer-brand">
               <h5>📚 CPPS</h5>
               <p className="footer-description">
-                Children's Paradise Public School is committed to providing quality education and nurturing young minds for a brighter future.
+                Children's Paradise Public School is an institution committed to providing quality education with modern facilities and experienced faculty.
               </p>
               <div className="social-links">
                 <a href="#" className="social-icon"><i className="fab fa-facebook-f"></i></a>
@@ -25,11 +26,21 @@ const Footer = () => {
           <div className="col-lg-2 col-md-6 mb-4">
             <h6 className="footer-title">Quick Links</h6>
             <ul className="footer-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/gallery">Gallery</a></li>
-              <li><a href="/faculty">Faculty</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/about">About Us</Link></li>
+              <li><Link to="/gallery">Gallery</Link></li>
+              <li><Link to="/faculty">Faculty</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+            </ul>
+          </div>
+          
+          <div className="col-lg-3 col-md-6 mb-4">
+            <h5 className="footer-heading">Resources</h5>
+            <ul className="footer-links">
+              <li><a href="#curriculum"><i className="fas fa-book me-2"></i>Curriculum</a></li>
+              <li><a href="#exams"><i className="fas fa-file-alt me-2"></i>Exams</a></li>
+              <li><a href="#calendar"><i className="fas fa-calendar-alt me-2"></i>Academic Calendar</a></li>
+              <li><Link to="/disclosure"><i className="fas fa-clipboard-list me-2"></i>Disclosure</Link></li>
             </ul>
           </div>
 

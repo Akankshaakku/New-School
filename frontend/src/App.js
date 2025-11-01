@@ -3,9 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 
+// Context
+import { DarkModeProvider } from './contexts/DarkModeContext';
+
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import Home from './pages/Home';
@@ -32,33 +36,36 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/faculty" element={<Faculty />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/disclosure" element={<Disclosure />} />
-            <Route path="/blog" element={<Blog />} />
-          </Routes>
-          <Footer />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
-        </div>
-      </Router>
-    </QueryClientProvider>
+    <DarkModeProvider>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <ScrollToTop />
+          <div className="App">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/faculty" element={<Faculty />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/disclosure" element={<Disclosure />} />
+              <Route path="/blog" element={<Blog />} />
+            </Routes>
+            <Footer />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: '#363636',
+                  color: '#fff',
+                },
+              }}
+            />
+          </div>
+        </Router>
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 

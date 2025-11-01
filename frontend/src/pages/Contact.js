@@ -146,7 +146,6 @@ const Contact = () => {
                 <div className="mb-3">
                   <textarea
                     className="form-control"
-                    rows="4"
                     placeholder="Your Message"
                     name="message"
                     value={formData.message}

@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Disclosure = () => {
   const [expandedItem, setExpandedItem] = useState(null);
+
+  // Close expanded item on ESC key press
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && expandedItem) {
+        setExpandedItem(null);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [expandedItem]);
 
   const disclosureItems = [
     {
@@ -121,24 +132,27 @@ const Disclosure = () => {
                       }`}
                     ></i>
                   </div>
-                  {expandedItem === item.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="disclosure-body"
-                    >
-                      <a
-                        href={item.file}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-primary-new btn-sm"
+                  <AnimatePresence mode="wait">
+                    {expandedItem === item.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="disclosure-body"
                       >
-                        <i className="fas fa-download me-2"></i>
-                        Download Certificate
-                      </a>
-                    </motion.div>
-                  )}
+                        <a
+                          href={item.file}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-primary-new btn-sm"
+                        >
+                          <i className="fas fa-download me-2"></i>
+                          Download Certificate
+                        </a>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </motion.div>
             ))}
@@ -164,7 +178,7 @@ const Disclosure = () => {
                   <li><strong>Location:</strong> Muzaffarpur, Bihar</li>
                   <li><strong>Affiliation:</strong> CBSE (In Progress)</li>
                   <li><strong>Classes:</strong> Nursery to Class 12</li>
-                  <li><strong>Established:</strong> 2020</li>
+                  <li><strong>Established:</strong> 2010</li>
                 </ul>
               </div>
             </motion.div>

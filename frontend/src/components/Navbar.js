@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import DarkModeToggle from './DarkModeToggle';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,15 +25,15 @@ const Navbar = () => {
   };
 
   const facilitiesList = [
-    { name: 'Labs', icon: 'fa-flask' },
-    { name: 'Hostel', icon: 'fa-bed' },
-    { name: 'Transport', icon: 'fa-bus' },
-    { name: 'Smart Class', icon: 'fa-chalkboard' },
-    { name: 'Library', icon: 'fa-book' }
+    { name: 'Facilities', path: '/facilities' },
+    { name: 'Library', path: '/facilities/library' },
+    { name: 'Sports', path: '/facilities/sports' },
+    { name: 'Auditorium', path: '/facilities/auditorium' }
   ];
 
   return (
-    <nav className={`navbar-new ${isScrolled ? 'scrolled' : ''}`}>
+    <>
+      <nav className={`navbar-new ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
         <Link className="navbar-brand-new" to="/">
           <img src="/image/logo.jpg" alt="CPPS Logo" className="navbar-logo" />
@@ -77,7 +78,7 @@ const Navbar = () => {
                 className="nav-link-new dropdown-toggle-new"
                 onClick={toggleFacilities}
               >
-                <i className="fas fa-book-open me-2"></i>
+                <i className="fas fa-building me-2"></i>
                 Facilities
                 <i className={`fas fa-chevron-down ms-2 ${isFacilitiesOpen ? 'open' : ''}`}></i>
               </button>
@@ -98,6 +99,8 @@ const Navbar = () => {
                 ))}
               </div>
             </li>
+            
+
             <li className="nav-item-new dropdown-new">
               <button
                 className="nav-link-new dropdown-toggle-new"
@@ -132,12 +135,16 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <a href="/contact" className="btn btn-primary-new btn-sm ms-3">
-            Enquiry Now
-          </a>
+          <div className="navbar-actions">
+            <DarkModeToggle />
+            <Link to="/contact" className="btn btn-primary-new btn-sm" onClick={() => setIsMenuOpen(false)}>
+              Enquiry Now
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
+    </>
   );
 };
 

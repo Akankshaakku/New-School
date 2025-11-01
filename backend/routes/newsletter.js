@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Newsletter = require('../models/Newsletter');
+const { Newsletter } = require('../data/dataStorage');
 
 // Subscribe to newsletter
 router.post('/subscribe', async (req, res) => {
@@ -12,17 +12,19 @@ router.post('/subscribe', async (req, res) => {
     }
     
     // Check if email already exists
-    const existingSubscription = await Newsletter.findOne({ email });
+    const existingSubscription = await Newsletter.findByEmail(email.toLowerCase());
     if (existingSubscription) {
       return res.status(400).json({ message: 'Email already subscribed' });
     }
     
-    const newsletter = new Newsletter({ email });
-    await newsletter.save();
+    const newsletter = await Newsletter.create({ 
+      email: email.toLowerCase(),
+      subscribed: true
+    });
     
     res.status(201).json({ 
       message: 'Successfully subscribed to newsletter!',
-      email 
+      email: newsletter.email
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -34,19 +36,27 @@ router.post('/unsubscribe', async (req, res) => {
   try {
     const { email } = req.body;
     
-    const newsletter = await Newsletter.findOneAndUpdate(
-      { email },
-      { subscribed: false },
-      { new: true }
-    );
+    const newsletter = await Newsletter.findByEmail(email.toLowerCase());
     
     if (!newsletter) {
       return res.status(404).json({ message: 'Email not found' });
     }
     
+    await Newsletter.update(newsletter._id, { subscribed: false });
+    
     res.json({ message: 'Successfully unsubscribed from newsletter' });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+// Get all subscribers (admin only)
+router.get('/', async (req, res) => {
+  try {
+    const subscribers = await Newsletter.findAll();
+    res.json(subscribers);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

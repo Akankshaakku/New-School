@@ -35,6 +35,9 @@
   padding: 30px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
 }
 
 .faculty-card:hover {
@@ -47,8 +50,8 @@
 }
 
 .faculty-image img {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
 }

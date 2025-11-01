@@ -1,29 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const Gallery = require('../models/Gallery');
+const { Gallery } = require('../data/dataStorage');
 
 // Get all gallery items
 router.get('/', async (req, res) => {
   try {
-    const { featured, limit, category } = req.query;
-    let query = {};
+    let gallery = await Gallery.findAll();
     
-    if (featured === 'true') {
-      query.featured = true;
+    // Filter by featured if requested
+    if (req.query.featured === 'true') {
+      gallery = gallery.filter(g => g.featured === true);
     }
     
-    if (category) {
-      query.category = category;
+    // Filter by category if requested
+    if (req.query.category) {
+      gallery = gallery.filter(g => g.category === req.query.category);
     }
     
-    let gallery = Gallery.find(query).sort({ createdAt: -1 });
+    // Sort by createdAt descending
+    gallery.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     
-    if (limit) {
-      gallery = gallery.limit(parseInt(limit));
+    // Apply limit if specified
+    if (req.query.limit) {
+      gallery = gallery.slice(0, parseInt(req.query.limit));
     }
     
-    const result = await gallery.exec();
-    res.json(result);
+    res.json(gallery);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -37,6 +39,42 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Gallery item not found' });
     }
     res.json(galleryItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Create gallery item (admin only)
+router.post('/', async (req, res) => {
+  try {
+    const galleryItem = await Gallery.create(req.body);
+    res.status(201).json(galleryItem);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Update gallery item (admin only)
+router.patch('/:id', async (req, res) => {
+  try {
+    const galleryItem = await Gallery.update(req.params.id, req.body);
+    if (!galleryItem) {
+      return res.status(404).json({ message: 'Gallery item not found' });
+    }
+    res.json(galleryItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Delete gallery item (admin only)
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Gallery.delete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Gallery item not found' });
+    }
+    res.json({ message: 'Gallery item deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

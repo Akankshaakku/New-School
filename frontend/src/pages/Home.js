@@ -1,7 +1,45 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+  // Array of school images for rotating background
+  const heroImages = [
+    '/image/front-image1.jpeg',
+    '/image/front-image2.jpeg',
+    '/image/front-image3.jpeg',
+    '/image/PG1.jpeg',
+    '/image/PG2.jpeg',
+    '/image/PG3.jpeg',
+    '/image/Photo1.jpeg',
+    '/image/Photo2.jpg',
+    '/image/Photo3.jpg'
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedFacility, setSelectedFacility] = useState(null);
+
+  // Auto-rotate images every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        (prevIndex + 1) % heroImages.length
+      );
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
+  // Close modal on ESC key press
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && selectedFacility) {
+        setSelectedFacility(null);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [selectedFacility]);
 
   const features = [
     {
@@ -116,7 +154,15 @@ const Home = () => {
   return (
     <div className="home">
       {/* Hero Section with Background Image */}
-      <section className="hero-section-new">
+      <section 
+        className="hero-section-new"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(26, 75, 132, 0.9) 0%, rgba(44, 62, 80, 0.9) 50%, rgba(52, 152, 219, 0.8) 100%), url(${heroImages[currentImageIndex]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transition: 'background-image 1s ease-in-out'
+        }}
+      >
         <div className="hero-overlay"></div>
         <div className="container hero-content-wrapper">
           <div className="row align-items-center min-vh-100">
@@ -135,12 +181,12 @@ const Home = () => {
                   through quality education, modern facilities, and dedicated mentorship.
                 </p>
                 <div className="hero-buttons-new">
-                  <a href="/about" className="btn btn-primary-new">
+                  <Link to="/about" className="btn btn-primary-new">
                     Discover More <i className="fas fa-arrow-right ms-2"></i>
-                  </a>
-                  <a href="/contact" className="btn btn-secondary-new">
+                  </Link>
+                  <Link to="/contact" className="btn btn-secondary-new">
                     Get in Touch <i className="fas fa-phone ms-2"></i>
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             </div>
@@ -232,6 +278,136 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Meet Our Leadership Section */}
+      <section className="leadership-section">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="section-header"
+          >
+            <h2 className="section-title-new">Meet Our Leadership</h2>
+            <p className="section-subtitle-new">
+              Dedicated leaders guiding our institution towards excellence
+            </p>
+          </motion.div>
+
+          <div className="row justify-content-center">
+            <motion.div
+              className="col-lg-4 col-md-6 mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <div className="faculty-card text-center p-4 shadow rounded">
+                <div className="faculty-image-wrapper">
+                  <img
+                    src="/image/FAC1.png"
+                    alt="Manish Kumar"
+                    className="img-fluid rounded-circle mb-3"
+                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/image/placeholder.png';
+                    }}
+                  />
+                </div>
+                <h5 className="mb-2">Manish Kumar</h5>
+                <h6 className="text-primary mb-2">Managing Director</h6>
+                <div className="faculty-social mt-3">
+                  <a href="#" className="btn btn-outline-primary btn-sm me-2">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" className="btn btn-outline-primary btn-sm me-2">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" className="btn btn-outline-primary btn-sm">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="col-lg-4 col-md-6 mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="faculty-card text-center p-4 shadow rounded">
+                <div className="faculty-image-wrapper">
+                  <img
+                    src="/image/principle.png"
+                    alt="Anjani Kumari"
+                    className="img-fluid rounded-circle mb-3"
+                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/image/placeholder.png';
+                    }}
+                  />
+                </div>
+                <h5 className="mb-2">Anjani Kumari</h5>
+                <h6 className="text-primary mb-2">Principal</h6>
+                <div className="faculty-social mt-3">
+                  <a href="#" className="btn btn-outline-primary btn-sm me-2">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" className="btn btn-outline-primary btn-sm me-2">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" className="btn btn-outline-primary btn-sm">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="col-lg-4 col-md-6 mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <div className="faculty-card text-center p-4 shadow rounded">
+                <div className="faculty-image-wrapper">
+                  <img
+                    src="/image/FAC13.png"
+                    alt="Rashmi Kumari"
+                    className="img-fluid rounded-circle mb-3"
+                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/image/placeholder.png';
+                    }}
+                  />
+                </div>
+                <h5 className="mb-2">Rashmi Kumari</h5>
+                <h6 className="text-primary mb-2">Manager</h6>
+                <div className="faculty-social mt-3">
+                  <a href="#" className="btn btn-outline-primary btn-sm me-2">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" className="btn btn-outline-primary btn-sm me-2">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" className="btn btn-outline-primary btn-sm">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* Facilities Section */}
       <section className="facilities-section">
         <div className="container">
@@ -244,7 +420,7 @@ const Home = () => {
           >
             <h2 className="section-title-new">Explore Top Facilities</h2>
             <p className="section-subtitle-new">
-              World-class infrastructure for comprehensive learning
+              CBSE-compliant infrastructure for comprehensive learning
             </p>
           </motion.div>
 
@@ -258,7 +434,7 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="facility-card">
+                <div className="facility-card" onClick={() => setSelectedFacility(facility)} style={{ cursor: 'pointer' }}>
                   <div className="facility-image-wrapper">
                     <img
                       src={facility.image}
@@ -278,6 +454,9 @@ const Home = () => {
                   <div className="facility-card-content">
                     <h5>{facility.title}</h5>
                     <p>{facility.desc}</p>
+                    <div className="facility-view-more">
+                      <i className="fas fa-arrow-right"></i>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -388,12 +567,54 @@ const Home = () => {
           >
             <h2>Begin Your Child's Journey to Success</h2>
             <p>Join our community of learners and experience world-class education</p>
-            <a href="/contact" className="btn btn-light-new">
+            <Link to="/contact" className="btn btn-light-new">
               Enroll Today <i className="fas fa-arrow-right ms-2"></i>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>
+
+      {/* Facility Detail Modal */}
+      <AnimatePresence mode="wait">
+        {selectedFacility && (
+          <motion.div
+            className="facility-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setSelectedFacility(null)}
+          >
+            <motion.div
+              className="facility-modal"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="modal-close"
+                onClick={() => setSelectedFacility(null)}
+              >
+                <i className="fas fa-times"></i>
+              </button>
+              <img
+                src={selectedFacility.image}
+                alt={selectedFacility.title}
+                className="modal-image"
+                onError={(e) => {
+                  e.target.src = '/image/placeholder.png';
+                }}
+              />
+              <div className="modal-content">
+                <h2>{selectedFacility.title}</h2>
+                <p>{selectedFacility.desc}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

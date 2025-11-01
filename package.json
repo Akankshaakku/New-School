@@ -1,0 +1,31 @@
+{
+  "name": "cpps-school-website",
+  "version": "1.0.0",
+  "description": "Children's Paradise Public School Website",
+  "private": true,
+  "scripts": {
+    "install-frontend": "cd frontend && npm install",
+    "install-backend": "cd backend && npm install",
+    "install-all": "npm run install-frontend && npm run install-backend",
+    "start-frontend": "cd frontend && npm start",
+    "start-backend": "cd backend && npm start",
+    "build-frontend": "cd frontend && npm run build",
+    "dev": "concurrently \"npm run start-backend\" \"npm run start-frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "your-github-repo-url"
+  },
+  "keywords": [
+    "school",
+    "website",
+    "react",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+

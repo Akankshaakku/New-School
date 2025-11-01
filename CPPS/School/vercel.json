@@ -1,7 +1,0 @@
-{
-  "buildCommand": "cd CPPS/School/frontend && npm run build",
-  "outputDirectory": "CPPS/School/frontend/build",
-  "framework": "react",
-  "installCommand": "cd CPPS/School/frontend && npm install"
-}
-

@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -27,19 +26,26 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// MongoDB connection
+// MongoDB connection (Optional - using file-based storage instead)
+// Uncomment if you want to use MongoDB
+/*
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/cpps-school');
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    if (process.env.MONGODB_URI) {
+      const conn = await mongoose.connect(process.env.MONGODB_URI);
+      console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } else {
+      console.log('MongoDB not configured - using file-based storage');
+    }
   } catch (error) {
     console.error('MongoDB connection error:', error);
-    process.exit(1);
+    console.log('Falling back to file-based storage');
   }
 };
 
-// Connect to database
 connectDB();
+*/
+console.log('Using file-based storage (MongoDB not required)');
 
 // Routes
 app.get('/api/health', (req, res) => {

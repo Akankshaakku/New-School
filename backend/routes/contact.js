@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const Contact = require('../models/Contact');
+const { Contact } = require('../data/dataStorage');
 
 // Submit contact form
 router.post('/', async (req, res) => {
   try {
-    const contact = new Contact(req.body);
-    await contact.save();
+    const contactData = {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone || '',
+      subject: req.body.subject,
+      message: req.body.message,
+      status: 'new'
+    };
+    const contact = await Contact.create(contactData);
     res.status(201).json({ 
       message: 'Thank you for your message! We will get back to you soon.',
       contact 
@@ -19,8 +26,49 @@ router.post('/', async (req, res) => {
 // Get all contact messages (admin only)
 router.get('/', async (req, res) => {
   try {
-    const contacts = await Contact.find().sort({ createdAt: -1 });
+    const contacts = await Contact.findAll();
+    // Sort by createdAt descending
+    contacts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     res.json(contacts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get contact by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+    res.json(contact);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Update contact status
+router.patch('/:id', async (req, res) => {
+  try {
+    const contact = await Contact.update(req.params.id, req.body);
+    if (!contact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+    res.json(contact);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Delete contact
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Contact.delete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+    res.json({ message: 'Contact deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

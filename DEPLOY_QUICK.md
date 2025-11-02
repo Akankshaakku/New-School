@@ -6,7 +6,7 @@
 
 ```bash
 # In your project root (d:\School)
-git initz
+git init
 git add .
 git commit -m "Ready for deployment"
 git branch -M main

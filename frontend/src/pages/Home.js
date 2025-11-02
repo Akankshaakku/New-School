@@ -307,8 +307,8 @@ const Home = () => {
                   <img
                     src="/image/FAC1.png"
                     alt="Manish Kumar"
-                    className="img-fluid rounded-circle mb-3"
-                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    className="img-fluid rounded-circle"
+                    style={{ width: '150px', height: '150px', objectFit: 'cover', margin: '0 auto' }}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/image/placeholder.png';
@@ -343,8 +343,8 @@ const Home = () => {
                   <img
                     src="/image/principle.png"
                     alt="Anjani Kumari"
-                    className="img-fluid rounded-circle mb-3"
-                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    className="img-fluid rounded-circle"
+                    style={{ width: '150px', height: '150px', objectFit: 'cover', margin: '0 auto' }}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/image/placeholder.png';
@@ -379,8 +379,8 @@ const Home = () => {
                   <img
                     src="/image/FAC13.png"
                     alt="Rashmi Kumari"
-                    className="img-fluid rounded-circle mb-3"
-                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    className="img-fluid rounded-circle"
+                    style={{ width: '150px', height: '150px', objectFit: 'cover', margin: '0 auto' }}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/image/placeholder.png';
@@ -409,7 +409,7 @@ const Home = () => {
 
 
       {/* Facilities Section */}
-      <section className="facilities-section">
+      <section id="facilities" className="facilities-section">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -440,15 +440,20 @@ const Home = () => {
                       src={facility.image}
                       alt={facility.title}
                       className="facility-image"
+                      loading="lazy"
                       onError={(e) => {
-                        if (e.target.nextElementSibling) {
-                          e.target.style.display = 'none';
-                          e.target.nextElementSibling.style.display = 'flex';
+                        e.target.style.display = 'none';
+                        const fallback = e.target.nextElementSibling;
+                        if (fallback) {
+                          fallback.style.display = 'flex';
                         }
                       }}
                     />
-                    <div className="facility-icon-fallback">
-                      <i className="fas fa-building"></i>
+                    <div className="facility-icon-fallback" style={{ display: 'none' }}>
+                      <i className={`fas ${facility.title === 'Computer Lab' ? 'fa-laptop' : 
+                                      facility.title === 'Library' ? 'fa-book' : 
+                                      facility.title.includes('Lab') ? 'fa-flask' : 
+                                      'fa-building'}`}></i>
                     </div>
                   </div>
                   <div className="facility-card-content">
@@ -492,11 +497,6 @@ const Home = () => {
                 viewport={{ once: true }}
               >
                 <div className="testimonial-card">
-                  <div className="testimonial-stars">
-                    {[...Array(5)].map((_, i) => (
-                      <i key={i} className="fas fa-star"></i>
-                    ))}
-                  </div>
                   <p className="testimonial-text">"{testimonial.text}"</p>
                   <div className="testimonial-author">
                     <div className="author-avatar">

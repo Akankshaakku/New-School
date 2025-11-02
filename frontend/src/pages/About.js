@@ -7,7 +7,7 @@ const About = () => {
   const values = [
     { icon: 'fa-lightbulb', title: 'Innovation', desc: 'Embracing modern teaching methods and technology' },
     { icon: 'fa-heart', title: 'Care', desc: 'Nurturing every student with compassion and support' },
-    { icon: 'fa-star', title: 'Excellence', desc: 'Striving for the highest standards in education' },
+    { icon: 'fa-trophy', title: 'Excellence', desc: 'Striving for the highest standards in education' },
     { icon: 'fa-handshake', title: 'Integrity', desc: 'Building trust through honesty and transparency' }
   ];
 
@@ -50,7 +50,8 @@ const About = () => {
                   }}
                 />
                 <div className="image-badge">
-                  <i className="fas fa-star"></i> Our School
+                  <i className="fas fa-school me-2"></i>
+                  <span>Our School</span>
                 </div>
               </div>
             </motion.div>

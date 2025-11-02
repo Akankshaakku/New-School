@@ -25,10 +25,10 @@ const Navbar = () => {
   };
 
   const facilitiesList = [
-    { name: 'Facilities', path: '/facilities' },
-    { name: 'Library', path: '/facilities/library' },
-    { name: 'Sports', path: '/facilities/sports' },
-    { name: 'Auditorium', path: '/facilities/auditorium' }
+    { name: 'All Facilities', path: '/#facilities', icon: 'fa-building' },
+    { name: 'Computer Lab', path: '/#facilities', icon: 'fa-laptop' },
+    { name: 'Library', path: '/#facilities', icon: 'fa-book' },
+    { name: 'Science Labs', path: '/#facilities', icon: 'fa-flask' }
   ];
 
   return (
@@ -84,18 +84,27 @@ const Navbar = () => {
               </button>
               <div className={`dropdown-menu-new ${isFacilitiesOpen ? 'show' : ''}`}>
                 {facilitiesList.map((facility, index) => (
-                  <a
+                  <Link
                     key={index}
-                    href="#facilities"
+                    to={facility.path}
                     className="dropdown-item-new"
                     onClick={() => {
                       setIsFacilitiesOpen(false);
                       setIsMenuOpen(false);
+                      // Scroll to facilities section if on home page
+                      if (facility.path.includes('#facilities')) {
+                        setTimeout(() => {
+                          const element = document.getElementById('facilities');
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }, 100);
+                      }
                     }}
                   >
                     <i className={`fas ${facility.icon} me-2`}></i>
                     {facility.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </li>

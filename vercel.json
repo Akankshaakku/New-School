@@ -9,10 +9,15 @@
       }
     }
   ],
+  "buildCommand": "cd frontend && npm install && git lfs pull && npm run build",
   "routes": [
     {
       "src": "/static/(.*)",
       "dest": "/static/$1"
+    },
+    {
+      "src": "/image/(.*)",
+      "dest": "/image/$1"
     },
     {
       "src": "/(.*)",

@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "postinstall": "git lfs pull || echo 'LFS not available or already pulled'",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

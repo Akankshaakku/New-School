@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
+import { apiService } from '../services/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -18,17 +20,45 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate form submission
-    toast.success('Thank you for your message! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
+    
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast.error('कृपया सभी required fields भरें');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error('कृपया एक valid email address दर्ज करें');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await apiService.contact.submit(formData);
+      toast.success('आपका message सफलतापूर्वक भेजा गया! हम जल्द ही आपसे contact करेंगे।');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      if (error.response) {
+        const errorMessage = error.response.data?.message || 'Message भेजने में समस्या आई। कृपया पुनः प्रयास करें।';
+        toast.error(errorMessage);
+      } else if (error.request) {
+        toast.error('Network error. कृपया अपना internet connection जांचें और पुनः प्रयास करें।');
+      } else {
+        toast.error('एक unexpected error आया है। कृपया पुनः प्रयास करें।');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -153,8 +183,19 @@ const Contact = () => {
                     required
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary w-100">
-                  Send Message
+                <button 
+                  type="submit" 
+                  className="btn btn-primary w-100"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <i className="fas fa-spinner fa-spin me-2"></i>
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
             </motion.div>

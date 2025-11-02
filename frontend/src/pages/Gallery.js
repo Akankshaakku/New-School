@@ -71,8 +71,14 @@ const Gallery = () => {
                     alt={image.alt}
                     className="img-fluid rounded shadow"
                     style={{ width: '100%', height: '200px', objectFit: 'cover' }}
+                    loading="lazy"
                     onError={(e) => {
-                      e.target.src = '/image/PG1.jpeg';
+                      e.target.onerror = null;
+                      if (!e.target.src.includes('PG1.jpeg')) {
+                        e.target.src = '/image/PG1.jpeg';
+                      } else {
+                        e.target.style.opacity = '0.5';
+                      }
                     }}
                   />
                   <div className="gallery-overlay">

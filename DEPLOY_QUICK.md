@@ -10,7 +10,7 @@ git init
 git add .
 git commit -m "Ready for deployment"
 git branch -M main
-git remote add origin https://github.com/Akankshaakku/school-final.git
+git remote add origin https://github.com/Akankshaakku/New-School.git
 git push -u origin main
 ```
 
@@ -24,8 +24,9 @@ git push -u origin main
 4. Configure:
    - **Framework Preset**: Create React App
    - **Root Directory**: `frontend` ⚠️ Important!
-   - **Build Command**: `npm run build`
+   - **Build Command**: `npm install && git lfs pull && npm run build` ⚠️ For Git LFS images!
    - **Output Directory**: `build`
+   - **Note**: If Git LFS pull fails, make sure Git LFS is installed in Vercel build environment
 5. Click **"Deploy"** (don't add env vars yet)
 6. **Wait for deployment** → Copy your frontend URL
    - Example: `https://cpps-school.vercel.app`

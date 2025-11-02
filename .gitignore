@@ -8,42 +8,31 @@ node_modules/
 
 # Production
 /build
-/dist
 
 # Misc
 .DS_Store
-.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-*~
 
-# OS
-Thumbs.db
-
-# Environment
-.env
-.env.production
-
-# Build outputs
-frontend/build/
-backend/dist/
-
-# Backend data (keep structure but ignore sensitive data)
+# Backend
+backend/node_modules/
 backend/data/files/*.json
-!backend/data/files/.gitkeep
 
+# Keep Git LFS files - don't ignore them!
+# *.png
+# *.jpg
+# *.jpeg
+# *.mp4
+# *.zip
